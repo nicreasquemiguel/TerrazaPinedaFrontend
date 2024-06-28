@@ -1,0 +1,144 @@
+@tailwind base;
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+@tailwind components;
+@tailwind utilities;
+
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+/* LIGHT MODE + GENERAL */
+
+.react-calendar {
+  border: 0px;
+
+  border-color: white;
+  background-color: transparent;
+  font-family: "DM Sans", sans-serif;
+}
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+.react-calendar__navigation {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+}
+abbr[title] {
+  border-bottom: none;
+  -webkit-text-decoration: unset;
+  text-decoration: unset;
+  -webkit-text-decoration: unset;
+  -webkit-text-decoration: unset;
+  text-decoration: unset !important;
+}
+.react-calendar__navigation__prev-button {
+  background-color: #4318ff !important;
+  border-radius: 10px;
+  min-width: 34px !important;
+  height: 34px !important;
+  color: white;
+
+}
+.react-calendar__navigation__next-button {
+  background-color: #4318ff !important;
+  border-radius: 10px;
+  min-width: 34px !important;
+  width: 34px !important;
+  height: 34px !important;
+  color: white;
+
+}
+.react-calendar__navigation__label {
+  font-weight: 700 !important;
+  font-size: 14px;
+
+  min-width: 130px;
+
+}
+.react-calendar__navigation__label:hover,
+.react-calendar__navigation__label:focus {
+  background-color: unset !important;
+  border-radius: 10px;
+}
+.react-calendar__tile {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px !important;
+  height: 34px !important;
+  color: #1b2559;
+}
+
+.react-calendar__tile:hover {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px !important;
+  height: 34px !important;
+  color: white;
+  background-color: blue;
+  border-radius: 30%;
+}
+
+.react-calendar__tile:disabled {
+  background-color: rgba(0, 0, 0, 0.15);
+  
+
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 30%;
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: #f4f7fe;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  margin-top: 6px;
+  font-weight: 800;
+}
+.react-calendar__tile--now,
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+ 
+  background-color: red;
+  border-radius: 10px;
+  color: green;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #b0bbd5;
+}
+.react-calendar__tile--active {
+  background-color: red;
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+}
+
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background-color: blue;
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+}
+
+/* DARK MODE */
