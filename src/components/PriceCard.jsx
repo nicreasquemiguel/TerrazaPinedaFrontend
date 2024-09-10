@@ -44,6 +44,7 @@ const PriceCard = ({precio, personas, paquete, horario, gradient, icon}) => {
                         <span className="text-2xl font-extrabold leading-tight text-gray-700 dark:text-gray-400 ms-3">{personas > 0 ? personas : "__"} Personas</span>
                         <input className='hidden' id='personas' name='personas' type='hidden' value={personas}/>
                     </li>
+                    Mas detalles abajo
 
                 </ul>
                 <button type="sumbit" className="text-white bg-gray-800 w-full font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Selecciona este paquete</button>

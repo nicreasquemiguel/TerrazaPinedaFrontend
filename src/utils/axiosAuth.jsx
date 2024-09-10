@@ -1,11 +1,13 @@
 import axios from "axios";
+import { BASE_URL, SERVER_URL } from "./constants";
 
 const apiAuthInstance = axios.create({
-    baseURL: "http://localhost:8000/auth/",
-    timeout: 5000,
+    baseURL: `${SERVER_URL}auth/`,
+    timeout: 20000,
     headers: {
         'Content-Type':'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        withCredentials: true,
     }
 })
 

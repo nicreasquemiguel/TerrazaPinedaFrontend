@@ -13,6 +13,8 @@ import Reservar from './containers/Reservar';
 import Paquetes from './containers/Paquetes';
 import Dashboard from './containers/Dashboard';
 import Checkout from './containers/Checkout';
+import PagoExitoso from './containers/PagoExitoso'
+import MisEventos from './containers/MisEventos';
 
 import {
   createBrowserRouter,
@@ -24,6 +26,8 @@ import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import MainWrapper from './layout/MainWrapper';
 import { Checkbox } from 'primereact/checkbox';
 import Invoice from './containers/Invoice';
+import Evento from './containers/Evento';
+import Order from './containers/Order';
 
 function App() {
   const router = createBrowserRouter([{
@@ -76,9 +80,21 @@ function App() {
         path: '/reservar/',
         element: <Reservar/>,
       },{
+        path: '/pago-exitoso/:order_id/',
+        element: <PagoExitoso/>,
+      },{
         path: '/paquetes/',
         element: <Paquetes/>,
-      }
+      },{
+        path: '/mis-eventos/',
+        element: <MisEventos/>,
+      },{
+        path: '/mis-eventos/:eventId',
+        element: <Evento/>,
+      },{
+        path: '/mis-eventos/:eventId/ordenes/:oid',
+        element: <Order/>,
+      },
     ]
 
   }]);

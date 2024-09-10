@@ -8,15 +8,20 @@ import Footer from '../containers/Footer';
 const Layout = ({  children }) => {
 
   return (
-        <>
-          <Navbar/>
-          <Outlet/>
+        <div className='w-full h-full flex justify-center'>
 
 
-          { children }
+          <div className =" flex flex-col max-w-7xl w-full min-w-80 md:min-w-[750px]">
+            
+            <Navbar/>
+            <Outlet/>
 
-          <Footer/>
-        </>
+
+            { children }
+
+            <Footer/>
+          </div>
+        </div>
   )      
 }
 

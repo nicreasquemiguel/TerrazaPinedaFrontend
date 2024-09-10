@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-// import { login, REACT_APP_API_URL } from '../actions/auth';
+
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthForm from '../../components/AuthForm';

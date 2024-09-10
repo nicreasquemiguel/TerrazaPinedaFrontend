@@ -12,6 +12,7 @@ const Checkout = () => {
   const [event, setEvent] = useState('')
   const [coupon, setCoupon] = useState('')
   const [order, setOrder] = useState('')
+  const [url, setUrl] = useState('')
   const [paymentLoading, setPaymentLoading] = useState(false)
   const event_id = state.event 
   const couponInput = useRef(null)
@@ -21,15 +22,27 @@ const Checkout = () => {
   const user = data?.user
   const userData = UserData()
 
-  const formData = new FormData();
+  const formData = new FormData()
+
+  console.log(state)
 
   const  payWithStripe =  async (e) => {
     e.preventDefault();
     setPaymentLoading(true)
     createCartOrder()
     console.log(order)
-    const res = apiInstance.post(`${API_BASE_URL}stripe-checkout/`, formData)
+    await apiInstance.post(`${API_BASE_URL}stripe-checkout/`, formData).then(res => {
+      console.log(res['data']['url'])
+      const url = (res['data']['url'])
+      
+      window.location.href = url
+      // navigate(url)
+    })
     // e.target.form.submit()  
+
+  
+
+      
     setPaymentLoading(false)
   }
 
@@ -98,9 +111,6 @@ const handleCoupon = (e) =>{
     // createCartOrder()
   },[event])
   console.log(event)
-  // useEffect(()=> {
-  //   // payWithStripe()
-  // },[event])
 
 
   const createCartOrder =  () => {
@@ -124,11 +134,11 @@ const handleCoupon = (e) =>{
         formData.append('phone', user?.phone);
         // formData.append('address', address);
         // console.log(event)
-        formData.append('event_id', event?.eid)
+        formData.append('event_id', event?.id)
         // formData.append('city', city);
         // formData.append('state', state);
         // formData.append('country', country);
-        formData.append('user_id', userData?.user_id);
+        formData.append('client', userData?.user_id);
         // const response = await apiInstance.post('create-order/', formData)
         // const response = await axios.post('create-order/', formData)
         // console.log(response.data.order_oid)
@@ -256,9 +266,8 @@ if (!event) { return null}
               }{console.log(order)}
                 {paymentLoading === false &&
                       <form  action={`${API_BASE_URL}stripe-checkout/${order}/`} method='POST'>
-                        <button onClick={payWithStripe} className="btn btn-primary btn-rounded w-100 mt-2" style={{ backgroundColor: "#635BFF" }}>Pay Now (Stripe)</button>
+                        <button onClick={payWithStripe} className="btn btn-primary btn-rounded w-100 mt-2" >Pay Now (Stripe)</button>
                       </form>
-                      
                         
                 }
             </div>

@@ -6,62 +6,74 @@ import { getVenues } from '../../actions/booking';
 
 
 
-const SliderPersonas = () => {
+const SliderPersonas = ({costos, callback}) => {
+
   const [params, setParams] = useSearchParams()
-  const [nPersonas, setPersonas ] = useState(0)
+  const [nPersonas, setPersonas ] = useState()
   const [slider, setSlider] = useState(30);
   const [price, setPrice] = useState(3500)
-  const personas = params.get('personas')
+  const personas = parseInt(params.get('personas')) 
+  console.log(personas);
 
   useEffect(() => {
-
-      if (personas <= 80){
-        setPersonas(personas)
-        setSlider(Math.ceil(personas / 10) * 10 )
-      }
-  }, [])
-
-
+    if (personas > 10 && personas  < 80){
+      setSlider(personas)
+      console.log(personas * 100);
+    }
+  },[personas])
+  
+  // const costos = {
+  //   10 : 3500,
+  //   20 : 3500,
+  //   30 : 3500,
+  //   40 : 3850,
+  //   50 : 4150,
+  //   60 : 4500,
+  //   70 : 4850,
+  //   80 : 5000
+  // }
 
 const onPriceChange = () => {
-    if(slider <= 30 ){
-        setPrice(3500)   
+    setPrice(costos[slider])
+    console.log(slider);
 
-    } else {
-
-        setPrice(Math.ceil( 3500 + ((slider - 30) * (2000/ (70)) )))
-    } 
-    
-
-    console.log(price)
 }
 
 useEffect(() => {
     onPriceChange()
 },[slider])
 
+
+
 const onSliderChange = (event) => {
     let element = parseInt(event.target.value)
-    console.log(element)
-    setSlider(element)
 
+    setSlider(element)
+    callback(element)
 }
 
-
-
-  console.log(personas)
 
 
   return (
     <>
   
-    <div className='w-1/2 rounded-2xl shadow-md  text-center'>
-        <span className='text-xs font-bold'>ARMA TU PAQUEsTE</span><br/>
-        <input id='nPeople' value={slider}  onChange={onSliderChange} className ="w-11/12 accent-sky-400 " type='range' min="10" max="100" step="10"></input><br/>
-        <span className='text-xs font-bold'>{slider} PERSONAS</span><br/>
-        <span className='text-xs text-green-500 font-bold m-0'>${price}</span><br/>
+    <div className='w-3/4 grid grid-cols-1 rounded-2xl shadow-md  text-center place-items-center justify-center'>
+        <span className='text-center text-teal-700 font-black justify-self-center  justify-items-center col-span-3'>Elije tu paquete</span>
+        <div className="relative my-12 w-full col-span-3">
+             <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 bottom-6">10p</span>
+             <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/4 bottom-6 pl-3">30p</span>
 
+             <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-[68%] bottom-6">60p</span>
 
+            <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 bottom-6">80p</span>
+            <input id="labels-range-input" type="range" value={slider} onChange={onSliderChange}  min="10" max="80" step="10" className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 "/>
+            <span className="text-sm text-gray-500 dark:text-gray-400 absolute -start-7 -bottom-6">Min ($3500)</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/4 -bottom-6">$3500</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-[65%] -bottom-6">$4500</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400 absolute -end-4 -bottom-6">($5000)</span>
+        </div> 
+        <span className='text-md font-bold col-span-3 mt-20'>{slider} PERSONAS</span><br/>
+        <span className='text-xl text-green-500 font-bold m-0 mb-5 col-span-3'>${price}</span><br/> 
     
     </div>
 

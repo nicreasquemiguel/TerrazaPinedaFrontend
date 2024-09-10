@@ -1,4 +1,4 @@
-export const REACT_APP_API_URL = 'http://localhost:8000'
+export const REACT_APP_API_URL = 'http://52.90.173.244:8000'
 
 import axios from 'axios';
 

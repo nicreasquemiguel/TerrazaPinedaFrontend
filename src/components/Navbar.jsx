@@ -85,9 +85,9 @@ const Navbar = () => {
     <>
 
 
-<nav className="bg-white sticky   border-gray-200 dark:bg-gray-900">
+<nav className="bg-white sticky   border-gray-200 dark:bg-gray-900 ">
 
-  <div className="max-w-screen-xl flex justify-between flex-wrap  items-center  mx-auto p-4">
+  <div className="max-w-screen-5xl flex justify-between flex-wrap  items-center  mx-auto p-4">
     <a href="/" className="flex      items-center space-x-3 rtl:space-x-reverse">
         {/* <img src="tp.svg" className="h-6 pl-3" alt="Flowbite Logo" /> */}
         <span onMouseOver={e => { expand(e) }} onMouseOut={e => { compress(e) }} className="self-center transition-all animate-pulse uppercase text-center font-extrabold text-2xl text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400  whitespace-nowrap dark:text-black">{letters}</span>

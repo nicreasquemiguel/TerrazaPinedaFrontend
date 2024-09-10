@@ -4,7 +4,7 @@ import Regla from '../components/Regla'
 
 const Reglamento = () => {
   return (
-    <div className='grid grid-cols-1 md:px-5 text-center'>
+    <div className='grid grid-cols-1 md:px-5 text-center max-w-7xl'>
         <Heading title={'Reglamento'} sentence={'Leáse con atención'} sentence2={' de '}/>
     <ul className="w-3/4 place-self-center pt-3 text-start divide-y divide-gray-200 dark:divide-gray-700">
     <Regla regla={'Cambios de fecha se tendran que hacer con 3 semanas de anticipacion, cancelaciones se pierde el apartado, SIN EXCEPCION.'} explicacion={'Porque si'}/>

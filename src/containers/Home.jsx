@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Heading from '../components/Heading';
+import HomeDetails from '../components/home/details/HomeDetails';
+import ServicesLayout from '../components/home/carrosel/ServicesLayout';
 
 const Home = () => (
 
-    <div className=''>
+    <div className='flex flex-col h-screen px-5  items-center w-full max-w-7xl md:min-w-xl'>
 
     <section className="bg-white dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
@@ -23,6 +25,8 @@ const Home = () => (
             </div>
         </div>
     </section>
+    <HomeDetails/>
+    <ServicesLayout/>
 
     </div>
 );
