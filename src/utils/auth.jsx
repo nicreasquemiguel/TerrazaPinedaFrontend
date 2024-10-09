@@ -131,17 +131,11 @@ export const setUser = async () => {
 // Function to set the authenticated user and update user state
 export const setAuthUser = (access_token, refresh_token) => {
     // Setting access and refresh tokens in cookies with expiration dates
-    console.log(access_token);
+
     Cookies.set('access_token', access_token, { expires: 1 })
 
     Cookies.set('refresh_token', refresh_token, { expires: 7 })
 
-    // console.log(Cookies.get());
-    // // console.log(Cookies.get('access_token'));
-    // document.cookie = "access_token=" + access_token
-    // document.cookie = "refresh_token=" + refresh_token
-    // console.log(document.cookie);
-    // console.log(access_token);
     // Decoding access token to get user information
     const user = jwtDecode(access_token) ?? null;
     console.log(user)

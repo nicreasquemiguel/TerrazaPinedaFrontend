@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 import Heading from '../components/Heading';
 import HomeDetails from '../components/home/details/HomeDetails';
 import ServicesLayout from '../components/home/carrosel/ServicesLayout';
+import { useAuthStore } from '../store/auth';
 
-const Home = () => (
+const Home = () =>{
+
+    const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
+ return (
+
+    
 
     <div className='flex flex-col h-screen px-5  items-center w-full max-w-7xl md:min-w-xl'>
 
@@ -19,9 +25,17 @@ const Home = () => (
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                     </svg>
                 </Link>
-                <a href="#" className="py-3 px-5 sm:ms-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-70">
-                    Learn more
-                </a>  
+                {
+                    !isLoggedIn ? 
+                    <a href="#" className="py-3 px-5 sm:ms-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-70">
+                        Learn more
+                     </a>  
+                :
+                    <a href="/mis-eventos" className="py-3 px-5 sm:ms-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-70">
+                        Mis Eventos
+                    </a>  
+                }
+
             </div>
         </div>
     </section>
@@ -29,6 +43,7 @@ const Home = () => (
     <ServicesLayout/>
 
     </div>
-);
+)
+}
 
 export default Home;

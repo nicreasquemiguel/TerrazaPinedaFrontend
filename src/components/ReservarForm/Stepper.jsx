@@ -13,7 +13,7 @@ const Stepper = ({callbackState, step}) => {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between w-1/2 ">
         {steps?.map((step, i) => (
           <div
             key={i} 
@@ -28,33 +28,6 @@ const Stepper = ({callbackState, step}) => {
           </div>
         ))}
       </div>
-
-
-      {/* { (
-        <button
-          className='btn'
-          onClick={() => {
-            currentStep > 1
-
-              && setCurrentStep((prev) => prev - 1);
-          }}
-        >
-          Regresar
-        </button>
-      )}   ---
-
-      {!complete && (
-        <button
-          className="btn"
-          onClick={() => {
-            currentStep === steps.length
-              ? setComplete(true)
-              : setCurrentStep((prev) => prev + 1);
-          }}
-        >
-          {currentStep === steps.length ? "Enviar solicitu" : "Next"}
-        </button>
-      )} */}
             
     </>
   );

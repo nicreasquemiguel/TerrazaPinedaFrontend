@@ -1,3 +1,4 @@
+import { Modal } from 'flowbite-react';
 import React, { useEffect, useState } from 'react'
 import { FaRegCalendarCheck, FaPeopleRobbery, FaRegMoneyBill1, FaFileContract } from "react-icons/fa6";
 import { MdAddTask, MdOutlineDescription, MdRemove } from "react-icons/md";
@@ -15,22 +16,32 @@ const DetailsBooking = ({description, fecha, personas, precio, extrasSelected, c
 
     }
 
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+  
+    function openModal() {
+      setIsOpen(true);
+    }
+  
+
+    function closeModal() {
+      setIsOpen(false);
+    }
+
 
     useEffect(()=>{
         getExtrasPrecios()
     }, [])
     console.log(total);
   return (
-    <div>
+    <>
 
 
 
-{/* <button data-modal-target="default-modal" data-modal-toggle="default-modal" className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Reglamento</button> */}
-<div className='w-full flex flex-col px-3 justify-center'>
+<div className=' flex flex-col max-w-7xl  min-w-80 !w-full !p-50 md:w-full md:min-w-3xl justify-center items-center'>
 
 
-<div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <div className="flex items-center justify-between mb-4">
+<div className="w-[90%] min-w-80 mb-3 items-start mx-10 max-w-5xl p-4 border border-gray-200 rounded-lg shadow sm:p-8 ">
+<div className="flex items-center justify-between mb-4">
         <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Detalles de la Reserva</h5>
 
    </div>
@@ -183,7 +194,7 @@ const DetailsBooking = ({description, fecha, personas, precio, extrasSelected, c
                                 <input required defaultChecked={acepto} onChange={callbackAcepto} id="checkbox-1" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 </div>
                                 <div className="ms-2 text-sm">
-                                    <label htmlFor="helper-checkbox" className="font-medium text-gray-900 dark:text-gray-300">Leí y acepto los <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terminos y condiciones</a></label>
+                                    <label htmlFor="helper-checkbox" className="font-medium text-gray-900 dark:text-gray-300">Leí y acepto los <button onClick={openModal}  className="text-blue-600 hover:underline dark:text-blue-500">terminos y condiciones</button></label>
                                     <p id="helper-checkbox-text" className="text-xs font-normal text-gray-500 dark:text-gray-400">Pasos y reglamento </p>
                                 </div>
                             </div>
@@ -225,8 +236,13 @@ const DetailsBooking = ({description, fecha, personas, precio, extrasSelected, c
 </div>
 
 </div>
-<div id="default-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div className="relative p-4 w-full max-w-2xl max-h-full">
+<Modal
+        isOpen={modalIsOpen}
+        ariaHideApp={false}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >    <div className="relative p-4 w-full max-w-2xl max-h-full">
 
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
@@ -256,7 +272,7 @@ const DetailsBooking = ({description, fecha, personas, precio, extrasSelected, c
             </div>
         </div>
     </div>
-</div>
+</Modal>
 
 
 
@@ -265,8 +281,22 @@ const DetailsBooking = ({description, fecha, personas, precio, extrasSelected, c
 
 
 
-    </div>
+    </>
   )
 }
+
+
+
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
 
 export default DetailsBooking

@@ -18,6 +18,7 @@ const useAuthStore = create((set, get) => ({
         email: get().allUserData?.email || null,
         first_name: get().allUserData?.first_name || null,
         last_name: get().allUserData?.last_name || null,
+        is_superuser: get().allUserData?.is_superuser || null,
     }),
 
     // Define a function 'setUser' that allows setting the 'allUserData' state.

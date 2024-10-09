@@ -7,7 +7,7 @@ const Description = ({callback}) => {
         callback(value)
     },[value])
   return (
-    <div className='md:px-5 text-center max-w-7xl w-full flex flex-col  justify-center items-center'>
+    <div className='p-10 text-center max-w-4xl w-full flex flex-col  justify-center items-center'>
         
         <label htmlFor="message" className="block mb-2 px-1 text-sm font-medium text-gray-900 dark:text-white">Explicanos un poco tú evento, tipo de musica/sonido, etc...</label>
 

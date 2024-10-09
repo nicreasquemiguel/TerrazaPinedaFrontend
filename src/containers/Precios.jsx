@@ -25,7 +25,7 @@ const Precios = () => {
 
 
       // Bearer
-      axiosToken.get('paquetes/').then((res)=> {
+      apiInstance.get('paquetes/').then((res)=> {
           console.log(res.data)
           setPaquetes(res.data)
       })

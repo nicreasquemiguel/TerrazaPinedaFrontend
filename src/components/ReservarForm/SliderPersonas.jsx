@@ -57,19 +57,19 @@ const onSliderChange = (event) => {
   return (
     <>
   
-    <div className='w-3/4 grid grid-cols-1 rounded-2xl shadow-md  text-center place-items-center justify-center'>
+    <div className='w-1/2 grid grid-cols-1 rounded-2xl shadow-md  text-center place-items-center justify-center'>
         <span className='text-center text-teal-700 font-black justify-self-center  justify-items-center col-span-3'>Elije tu paquete</span>
         <div className="relative my-12 w-full col-span-3">
              <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-0 bottom-6">10p</span>
              <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/4 bottom-6 pl-3">30p</span>
 
-             <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-[68%] bottom-6">60p</span>
+             <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-[69%] bottom-6">60p</span>
 
             <span className="text-sm text-gray-500 dark:text-gray-400 absolute end-0 bottom-6">80p</span>
-            <input id="labels-range-input" type="range" value={slider} onChange={onSliderChange}  min="10" max="80" step="10" className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 "/>
+            <input id="labels-range-input" type="range" value={slider} onChange={onSliderChange}  min="10" max="80" step="10" className="w-full h-2 bg-gray-200 rounded-lg accent-teal-500 cursor-pointer dark:bg-gray-700 "/>
             <span className="text-sm text-gray-500 dark:text-gray-400 absolute -start-7 -bottom-6">Min ($3500)</span>
             <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-1/4 -bottom-6">$3500</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-[65%] -bottom-6">$4500</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400 absolute start-[66%] -bottom-6">$4500</span>
             <span className="text-sm text-gray-500 dark:text-gray-400 absolute -end-4 -bottom-6">($5000)</span>
         </div> 
         <span className='text-md font-bold col-span-3 mt-20'>{slider} PERSONAS</span><br/>

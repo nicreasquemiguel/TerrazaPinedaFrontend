@@ -4,15 +4,16 @@ import apiInstance from '../utils/axiosAPI'
 import UserData from '../views/plugin/UserData.jsx'
 import Heading from '../components/Heading.jsx';
 import { FaRegCalendarCheck } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useToken from '../utils/useToken.jsx';
 import { MdArrowBack } from "react-icons/md";
+
 
 const Order = () => {
 
     const [loading, setIsLoading] = useState(true)
     const [orderResponse, setOrderResponse] = useState([])
-    const [order, setOrder] = useState('')
+    const [ordered, setOrdered] = useState('')
     const [orderID, setOrderID] = useState('')
     const [linked, setLinked] = useState(false)
     const [total, setTotal] = useState(0)
@@ -23,11 +24,16 @@ const Order = () => {
     const param = useParams()
     const userData = UserData()
     const navigate = useNavigate()
+    const state = useLocation()
+    const order = JSON.parse(state.state)
+
+    console.log(order);
+
 
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('session_id');
     // const payaplOrderId = urlParams.get('payapl_order_id');
- 
+    
     console.log(param?.oid);
     console.log(param);
     console.log(sessionId);
@@ -41,19 +47,17 @@ const Order = () => {
         console.log(res.data.stripe_session_id)
         const stripe_session = res.data.stripe_session
 
-        setOrder(res.data)
+        setOrdered(res.data)
         setStripeSession(stripe_session)
         setLinked(res.data.linked)
             console.log(res.data.linked);
         if(res.data.linked == false){
 
 
-    //     // formData.append('order_oid', orderID);
 
-    //     // formData.append('payapl_order_id', payaplOrderId);
 
             axiosToken.patch(`pago-exitoso/${param?.oid}/`).then((res) => {
-                setOrder(res.data)
+                setOrdered(res.data)
                 
                 console.log(res.data)
                 if (res.data.payment_status == 'pagado') {
@@ -74,47 +78,12 @@ const Order = () => {
     }
  
     useEffect(()=>{
-        getSession()
+        if (!order) {
+            getSession()
+        }
     },[param?.oid])
 
-
-    // useEffect(()=>{
-    //     setLinked(order?.linked)
-    // },[order])
-
-    // Payment Processing
-    // useEffect(() => {
-    //     const formData = new FormData();
-    //     // formData.append('order_oid', orderID);
-    //     formData.append('session_id', sessionId);
-    //     // formData.append('payapl_order_id', payaplOrderId);
-
-    //     console.log(linked);
-    //     console.log(order);
-    //     setIsLoading(true)
-    //     console.log(orderID);
-    //     if(!linked && order){
-
-    //         apiInstance.patch(`pago-exitoso/${param?.oid}/`, formData).then((res) => {
-    //             setOrder(res.data)
-                
-    //             console.log(res.data)
-    //             if (res.data.payment_status == 'pagado') {
-    //                 setIsLoading(false)
-    //             }
-                
-                
-                
-                
-                
-    //             if (res.data.message === "Already Paid") {
-    //                 setIsLoading(false)
-    //             }
-                
-    //         })
-    //     }
-            
-    //     }, [order])
+    
 
 
         return (
@@ -138,7 +107,7 @@ const Order = () => {
                             </div>
                             <div className="flex-1 min-w-0 ms-4">
                                 <p className="text-sm font-medium text-gray-900 capitalize truncate dark:text-white">
-                                { new Date(order?.event?.date).toLocaleDateString("es-ES",{ weekday:'long', day:'numeric', month:'long', year:'numeric' })}
+                                { new Date(order ? order?.event?.date : ordered.event?.date).toLocaleDateString("es-ES",{ weekday:'long', day:'numeric', month:'long', year:'numeric' })}
 
                                 </p>
                                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -162,7 +131,7 @@ const Order = () => {
                             </div>
                             <div className="flex-1 min-w-0 ms-4">
                                 <p className="text-sm font-medium text-gray-900 capitalize truncate dark:text-white">
-                                   # {order.oid}
+                                   #   {order ? order?.oid : ordered.oid}
                                 </p>
                                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                                     Codigo unico de tu orden de pago
@@ -179,11 +148,11 @@ const Order = () => {
                                 {/* <MdOutlineDescription className='w-8 h-8'/> */}
                             </div>
                             <div className="flex-1 min-w-0 ms-4">
-                                <p className="text-sm font-medium text-gray-900 uppercas dark:text-white">
-                                    {order?.payment_type}
+                                <p className="text-sm  uppercase font-medium text-gray-900 uppercas dark:text-white">
+                                    {order ? order?.payment_type : ordered.payment_type}
                                 </p>
                                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                                    Descripción del evento
+                                    Descripción del pago
                                 </p>
                             </div>
                             <div  className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
@@ -206,7 +175,7 @@ const Order = () => {
                                 </p>
                             </div>
                             <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                ${order?.subtotal}
+                                ${order ? order?.subtotal : ordered.subtotal}
                             </div>
                         </div>
                     </li>
@@ -249,13 +218,13 @@ const Order = () => {
                                 </p>
                             </div>
                             <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                ${order.total}
+                                ${order ? order?.total : ordered.total}
                             </div>
                         </div>
                     </li>
                     <li className="pt-3 pb-0 sm:pt-4">
 
-                        <button onClick={()=>{navigate(`/mis-eventos/${order.event.eid}`) }} className='bg-red-700 hover:bg-teal-900 uppercase font-black text-white rounded-lg p-3 mt-4 w-full flex items-center justify-center '>
+                        <button onClick={()=>{navigate(`/mis-eventos/${param?.eventId}`) }} className='bg-red-700 hover:bg-teal-900 uppercase font-black text-white rounded-lg p-3 mt-4 w-full flex items-center justify-center '>
                              <MdArrowBack className='pr-1 text-xl'/>
                              Regresar a mi evento
                         </button>

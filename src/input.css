@@ -21,12 +21,12 @@ pre {
   @apply w-full rounded-lg;
 }
 
-.calendar__navigation {
+.react-calendar__navigation {
   @apply bg-white !flex justify-evenly mb-3 ;
 }
 
-.calendar__navigation__prev2-button, 
-.calendar__navigation__next2-button  {
+.react-calendar__navigation__prev2-button, 
+.react-calendar__navigation__next2-button  {
   @apply !hidden;
 }
 .react-calendar__tile {
@@ -73,13 +73,13 @@ pre {
   @apply !bg-blue-200 !text-4xl;
 }
 
-.calendar__navigation__prev-button,
-.calendar__navigation__next-button  {
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button  {
 
 @apply !bg-black !text-white !rounded-xl !h-12 !w-12 !text-4xl  ;
 }
 
-.calendar__navigation__label__labelText{
+.react-calendar__navigation__label__labelText{
   @apply !uppercase !text-teal-700 !font-black !text-xl sm:!text-4xl;
 }
 

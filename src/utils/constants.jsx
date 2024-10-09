@@ -1,6 +1,8 @@
-export const BASE_URL = "http://44.220.132.29:8000/auth/"
-export const SERVER_URL = "http://44.220.132.29:8000/"
-export const API_BASE_URL = "http://44.220.132.29:8000/api/"
+const URL = "http://18.214.73.102:8000/"
+
+export const BASE_URL = `${URL}auth/`
+export const SERVER_URL = URL
+export const API_BASE_URL = `${URL}api/`
 export const STATUS = [
     {"name":"solicitud", "title":"Solicitud de Reserva"},
     {"name":"aceptacion", "title" :"Aceptación de Reserva"},

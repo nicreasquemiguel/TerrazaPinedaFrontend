@@ -9,7 +9,7 @@ function UseProfileData() {
 
     const axios = apiInstance
     const userData = UserData()
-    // console.log(userData?.user_id)
+
 
     useEffect(() => {
         if (userData){

@@ -226,13 +226,13 @@ const Reservar =  () => {
 
 
   return (
-    <div className='md:px-5 text-center max-w-7xl w-full flex flex-col '>       
+    <div className=' flex flex-col  min-w-80 !w-full  md:w-full md:min-w-3xl justify-start items-center'>
         <Heading title={'Solcita tú Reserva'} sentence={'Se aprobará según los detalles de tu evento, tales como fecha, paquete, descripción, seguir pasos...'} logo={false}/>
-        <form onSubmit={e => onSubmit(e)} className=' w-full h-3/4 '>
+        <form onSubmit={e => onSubmit(e)} className=' w-full h-3/4 flex flex-col items-center  '>
             {/* <ReservarForm/> */}
             
-            <Stepper callbackState={callbackState} step={step}/>
-            <div className='bg-white w-full pt-5 flex justify-center '>
+            <Stepper callb ackState={callbackState} step={step}/>
+            <div className='bg-white w-full pt-5 flex flex-row justify-center items-center item '>
 
               {PageDisplay()}
             </div>
@@ -248,7 +248,7 @@ const Reservar =  () => {
                 Regresar
               </button>
 
-              <button type="submit" className="text-white bg-[#24292F] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2" onClick={() => {
+              <button type="submit" cassName="text-white bg-[#24292F] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2" onClick={() => {
               setStep(prev => prev + 1)}}>
                 {step == 5 ? "Enviar solicitud" : "Continuar"}
                 <MdNavigateNext className='font-bold'/>

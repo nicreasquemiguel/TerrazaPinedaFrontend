@@ -11,7 +11,7 @@ const HomeDetails = () => {
     <div className=' w-full flex flex-col items-center '>
         <Heading title={"Detalles de Renta"} logo={false}/>
         <DetailsGrid />
-        <button onClick={()=> {navigate('/reglamento')}} type="button" class="text-white bg-gray-700  hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button onClick={()=> {navigate('/reglamento')}} type="button" className="text-white bg-gray-700  hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
           <IoDocumentTextOutline className='w-10 '/>
 

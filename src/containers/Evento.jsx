@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import apiInstance from '../utils/axiosAPI'
 import useToken from '../utils/useToken'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import Heading from '../components/Heading'
 import { FaRegCalendarCheck, FaPeopleRobbery, FaRegMoneyBill1, FaMoneyBillTrendUp,FaFileContract } from "react-icons/fa6";
 import { FaCheck, FaRegStar } from "react-icons/fa";
@@ -10,7 +10,7 @@ import { GiMoneyStack, GiPayMoney } from "react-icons/gi";
 import { TbDoorExit, TbCash } from "react-icons/tb";
 import { PiHandsClapping } from "react-icons/pi";
 import { RiFolderTransferLine } from "react-icons/ri";
-
+import { Accordion } from "flowbite-react";
 import { LuClock, LuPalmtree } from "react-icons/lu";
 import moment from 'moment'
 import { STATUS } from '../utils/constants'
@@ -24,10 +24,16 @@ import Rating from '../components/Rating'
 
 const Evento = () => {
     const [isLoading, setIsLoading] = useState(false)
+    const [event, setEvent] = useState('')
+    const [status, setStatus]= useState(0)
+    const [orders, setOrders] = useState('')
+    const [cantidad, setCantidad] = useState(1000)
+
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn) 
     
     const navigate = useNavigate()
     const params = useParams()
+    const { eventId } = useParams()
     const axiosToken = useToken()
     const userData = UserData()
     
@@ -35,20 +41,21 @@ const Evento = () => {
         if(!isLoggedIn()){
           navigate('/login')
         }
+
     }, [])
 
 
-    const [event, setEvent] = useState('')
-    const [status, setStatus]= useState(0)
-    const [orders, setOrders] = useState('')
-    const [cantidad, setCantidad] = useState(1000)
-    const { eventId } = useParams()
 
     const  callEvent = async  ()  => {
-        await axiosToken.get(`eventos/${eventId}`).then((res)=>{
-            setEvent(res.data)
-            statusHandler(res.data)
-        })
+        try {
+            await axiosToken.get(`eventos/${eventId}`).then((res)=>{
+                setEvent(res.data)
+                statusHandler(res.data)
+            })
+        } catch (error) {
+            navigate("/mis-eventos/", {replace: true})
+        }
+
     }
     const statusHandler = (e) =>{
         STATUS.map((s,index)=> {
@@ -399,10 +406,10 @@ const Evento = () => {
 
                         </div>
 
-                        {event.status == "finalizado"}{
-                            
+                        {event.status == "finalizado" ?
+                            <Rating eid={eventId} commented={event?.event_review} rating={event?.event_rating}/>
+                        :<></>    
                         } 
-                        <Rating eid={eventId} commented={event?.event_review} rating={event?.event_rating}/>
                     </li>
 
 
@@ -440,7 +447,7 @@ const Evento = () => {
                             </li>
                             </>
                             :
-                            <p></p>
+                            <></>
                         }
 
                         { orders && event.advance ?
@@ -454,10 +461,15 @@ const Evento = () => {
                                         {/* <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="Michael image"/> */}
                                         <MdAddCard className='w-8 h-6'/>
                                     </div>
+
                                     <div className="flex-1 min-w-0 ms-4">
                                             <a href={`/mis-eventos/${eventId}/ordenes/${order.oid}`} className="text-sm font-bold text-gray-900 truncate dark:text-white">
                                                 Orden de pago (#{order.oid})
                                             </a>
+                                            <Link 
+                                                to={{pathname: `ordenes/${order.oid}`}}
+                                                state= {JSON.stringify(order)}
+                                                >Learn More</Link>
                                             <p className="text-sm text-gray-500  dark:text-gray-400">
                                                 Tipo de transacción: <span className='uppercase text-xs'>{order.payment_type}</span>
 
@@ -527,7 +539,7 @@ const Evento = () => {
 
                                     </div>
                                 </li> 
-                                { event.advance < event.total_price ?
+                                { event.advance < event.total_price && event.status != "solicitud" ?
                                 <li className="py-3 sm:py-4">
                                     <div className="flex items-center ">
                                         <div className="flex-shrink-0">
@@ -568,62 +580,54 @@ const Evento = () => {
                                 </li> 
                             : <></>    
                         }
-                        { event.advance < event.total_price?
+                        { event.advance < event.total_price && event.status != "solicitud" ?
                             <>
 
                                 <li className="py-3 sm:py-4">
+                                        <Accordion>
+                                            <Accordion.Panel>
+                                            <Accordion.Title>
+                                                <p className="flex items-center">                                                    
+                                                    <MdLaptopChromebook className='mr-3'/>
+                                                    <span className="mr-2">Pago Online</span>
 
+                                                </p>
+                                                </Accordion.Title>
+                                                <Accordion.Content>
+                                                  <button onClick={payWithStripe} className="p-3 text-white font-bold  rounded-xl w-full bg-blue-500 btn-rounded w-100 mt-2" >Pagar ahora (Stripe)</button>
 
-                                        <div id="accordion-open" data-accordion="open">
-                                            <h2 id="accordion-open-heading-1">
-                                                <button type="button" className="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                                                <span className="flex items-center"><MdLaptopChromebook className='mr-3 text-black'/> Pago Online</span>
-                                                <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5"/>
-                                                </svg>
-                                                </button>
-                                            </h2>
-                                            <div id="accordion-open-body-1" className="" aria-labelledby="accordion-open-heading-1">
-                                                <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                                                    <button onClick={payWithStripe} className="p-3 text-white font-bold  rounded-xl w-full bg-blue-500 btn-rounded w-100 mt-2" >Pagar ahora (Stripe)</button>
-                                                
-                                                </div>
-                                            </div>
-                                            <h2 id="accordion-open-heading-2">
-                                                <button type="button" className="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-open-body-2" aria-expanded="false" aria-controls="accordion-open-body-2">
-                                                <span className="flex items-center"><RiFolderTransferLine className='mr-3 text-black'/>Transferencias y Depositos</span>
-                                                <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5"/>
-                                                </svg>
-                                                </button>
-                                            </h2>
-                                            <div id="accordion-open-body-2" className="hidden" aria-labelledby="accordion-open-heading-2">
-                                                <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                                                <p className="mb-2 text-gray-500 dark:text-gray-400">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p>
-                                                <p className="text-gray-500 dark:text-gray-400">Check out the <a href="https://flowbite.com/figma/" className="text-blue-600 dark:text-blue-500 hover:underline">Figma design system</a> based on the utility classes from Tailwind CSS and components from Flowbite.</p>
-                                                </div>
-                                            </div>
-                                            <h2 id="accordion-open-heading-3">
-                                                <button type="button" className="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-open-body-3" aria-expanded="false" aria-controls="accordion-open-body-3">
-                                                <span className="flex items-center"><TbCash className='mr-3 text-black'/>Efectivo</span>
-                                                <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5"/>
-                                                </svg>
-                                                </button>
-                                            </h2>
-                                            <div id="accordion-open-body-3" className="hidden" aria-labelledby="accordion-open-heading-3">
-                                                <div className="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-                                                <p className="mb-2 text-gray-500 dark:text-gray-400">The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.</p>
-                                                <p className="mb-2 text-gray-500 dark:text-gray-400">However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.</p>
-                                                <p className="mb-2 text-gray-500 dark:text-gray-400">Learn more about these technologies:</p>
-                                                <ul className="ps-5 text-gray-500 list-disc dark:text-gray-400">
-                                                    <li><a href="https://flowbite.com/pro/" className="text-blue-600 dark:text-blue-500 hover:underline">Flowbite Pro</a></li>
-                                                    <li><a href="https://tailwindui.com/" rel="nofollow" className="text-blue-600 dark:text-blue-500 hover:underline">Tailwind UI</a></li>
-                                                </ul>
-                                                </div>
-                                            </div>
-                                            </div>
+                                                </Accordion.Content>
+                                            </Accordion.Panel>
+                                            <Accordion.Panel>
+                                                <Accordion.Title>
+                                                <p className="flex items-center">                                                    
+                                                    <RiFolderTransferLine className='mr-3'/>
+                                                    <span className="mr-2">Depositos y Transferencias</span>
 
+                                                </p>
+                                                </Accordion.Title>
+                                                <Accordion.Content>
+                                                  <button onClick={payWithStripe} className="p-3 text-white font-bold  rounded-xl w-full bg-blue-500 btn-rounded w-100 mt-2" >Pagar ahora (Stripe)</button>
+
+                                                </Accordion.Content>
+                                            </Accordion.Panel>
+                                            <Accordion.Panel>
+                                                <Accordion.Title>
+                                                <p className="flex items-center">                                                    
+                                                    <TbCash className='mr-3'/>
+                                                    <span className="mr-2">Efectivo</span>
+
+                                                </p>
+                                                </Accordion.Title>
+                                                <Accordion.Content>
+                                                    
+                                                  <button onClick={payWithStripe} className="p-3 text-white font-bold  rounded-xl w-full bg-blue-500 btn-rounded w-100 mt-2" >Pagar ahora (Stripe)</button>
+
+                                                </Accordion.Content>
+                                            </Accordion.Panel>
+                                        </Accordion>
+
+   
                          
                                 </li>   </>
                             :

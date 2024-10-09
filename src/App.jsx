@@ -28,6 +28,9 @@ import { Checkbox } from 'primereact/checkbox';
 import Invoice from './containers/Invoice';
 import Evento from './containers/Evento';
 import Order from './containers/Order';
+import AdminDashboard from './containers/admin/AdminDashboard';
+import AdminStatistics from './containers/admin/AdminStatistics';
+import AdminEvents from './containers/admin/AdminEvents';
 
 function App() {
   const router = createBrowserRouter([{
@@ -94,9 +97,25 @@ function App() {
       },{
         path: '/mis-eventos/:eventId/ordenes/:oid',
         element: <Order/>,
-      },
+      }
     ]
 
+
+  }, {
+    
+    path: "admin/",
+    element: <AdminDashboard/>,
+    children: [
+      {
+        path: 'estadisticas/',
+        element: <AdminStatistics/>,
+      },
+      {
+        path: 'eventos/',
+        element: <AdminEvents/>,
+      },
+    
+    ]
   }]);
 
   return (
